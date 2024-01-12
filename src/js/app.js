@@ -6,14 +6,22 @@ const obj = {
   defence: 40,
 };
 
-function createObj(key, value) {
-  this.key = key;
-  this.value = value;
-}
-const result = [];
+export default function orderBy(obj, order) {
+  const result = [];
 
-for (const item in obj) {
-  const newObj = new createObj(item, obj[item]);
-  result.push(newObj);
+  order.forEach((el) => {
+    if (el in obj) {
+      result.push({ key: el, value: obj[el] });
+    }
+  });
+
+  Object.keys(obj)
+    .sort()
+    .forEach((el) => {
+      if (!order.includes(el)) {
+        result.push({ key: el, value: obj[el] });
+      }
+    });
+
+  return result;
 }
-console.log(result);
